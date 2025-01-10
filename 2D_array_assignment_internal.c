@@ -1,7 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+int str_len(char* string){
+    int length=0;
+    int index=0;
+    while(string[index++]!='\0')
+        length++;
+    return length;
+}
+int str_cmp(char* string_1,char* string_2){
+    int index=0;
+    int compare=0;
+    while(string_1[index]!='\0' && string_2[index]!='\0'){
+        if(string_1[index]-string_2[index]!=0){
+            compare=string_1[index]-string_2[index];
+            break;
+        }
+        index++;
+    }
+    if(strlen(string_1)<strlen(string_2))
+        compare= -1;
+    else
+        compare=1;
 
+    return compare;
+}
 int main() {
     int rows=0,cols=0;
     scanf("%d%d",&rows,&cols);
