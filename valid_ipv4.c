@@ -18,6 +18,7 @@ int main(){
     int end_index=-1;
     int curr_num=-1;
     int valid=1;
+    int count_points=0;
     for(int index=0;index<str_len(input);index++){
         if(input[index]>='0' && input[index]<='9'){
             if(curr_num==0 && input[index]=='0'){
@@ -30,14 +31,17 @@ int main(){
             curr_num+=input[index]-48;
         }
         else if(input[index]=='.'){
+            count_points++;
             if(curr_num<0 || curr_num>255 || (index<str_len(input)-1 && input[index+1]=='.')){
                 valid=0;
             }
             curr_num=-1;
         }
+        else
+            valid=0;
     }
     
-    if(valid)
+    if(valid && count_points<4)
         printf("Valid");
     else
         printf("Invalid");
