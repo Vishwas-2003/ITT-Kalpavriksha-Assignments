@@ -74,7 +74,7 @@ void update_at_position(struct Node* head,int n,int position){
         temp=temp->next;
         position--;
     }
-    if(position==1){
+    if(temp!=NULL && position==1){
         temp->data=n;
     }
     else{
@@ -92,20 +92,26 @@ struct Node* delete_first_element(struct Node* head){
     }
     return head;
 }
-void delete_last_element(struct Node* head){
+struct Node* delete_last_element(struct Node* head){
     struct Node* temp=head;
-    struct Node* prev=NULL;
+    struct Node* prev=head;
     if(head!=NULL){
         while(temp->next!=NULL){
             prev=temp;
             temp=temp->next;
         }
-        prev->next=NULL;
-        free(temp);
+        if(prev->next!=NULL){
+            prev->next=NULL;
+            free(temp);
+        }
+        else{
+            head=NULL;
+        }
     }
     else{
         printf("No elements to delete\n");
     }
+    return head;
 }
 struct Node* delete_kth_element(struct Node* head,int k){
     if(k==1){
@@ -169,7 +175,7 @@ int main(){
                 head=delete_first_element(head);
                 break;
             case 7:
-                delete_last_element(head);
+                head=delete_last_element(head);
                 break;
             case 8:
                 printf("Enter index:");
