@@ -5,50 +5,50 @@ struct Node{
     int data;
 };
 
-struct Node* make_node(int n){
+struct Node* make_node(int new_data){
     struct Node* new_node=(struct Node*)malloc(sizeof(struct Node*));
-    new_node->data=n;
+    new_node->data=new_data;
     new_node->next=NULL;
     return new_node;
 }
 
-struct Node* add_in_beginning(struct Node* head,int n){
+struct Node* add_in_beginning(struct Node* head,int new_data){
     if(head==NULL){
-        head=make_node(n);
+        head=make_node(new_data);
     }
     else{
-        struct Node* temp=make_node(n);
+        struct Node* temp=make_node(new_data);
         temp->next=head;
         head=temp;
     }
     return head;
 }
-struct Node* add_in_end(struct Node* head,int n){
+struct Node* add_in_end(struct Node* head,int new_data){
     if(head==NULL){
-        head=make_node(n);
+        head=make_node(new_data);
     }
     else{
         struct Node* temp=head; 
         while(temp->next!=NULL){
             temp=temp->next;
         }
-        temp->next=make_node(n);
+        temp->next=make_node(new_data);
     }
     return head;
     
 }
-struct Node* add_at_k(struct Node* head,int n,int k){
-    if(k==1){
-        head=add_in_beginning(head,n);
+struct Node* add_at_position(struct Node* head,int new_data,int operation_index){
+    if(operation_index==1){
+        head=add_in_beginning(head,new_data);
     }
     else{
         struct Node* temp=head;
-        while(temp!=NULL && temp->next!=NULL && k-1!=1){
+        while(temp!=NULL && temp->next!=NULL && operation_index-1!=1){
             temp=temp->next;
-            k--;
+            operation_index--;
         }
-        if(k-1==1){
-            struct Node* new_node=make_node(n);
+        if(operation_index-1==1){
+            struct Node* new_node=make_node(new_data);
             new_node->next=temp->next;
             temp->next=new_node;
         }
@@ -68,14 +68,14 @@ void print_list(struct Node* head){
     printf("\n");
 }
 
-void update_at_position(struct Node* head,int n,int position){
+void update_at_position(struct Node* head,int new_data,int position){
     struct Node* temp=head;
     while(temp!=NULL && temp->next!=NULL && position!=1){
         temp=temp->next;
         position--;
     }
     if(temp!=NULL && position==1){
-        temp->data=n;
+        temp->data=new_data;
     }
     else{
         printf("Invalid Index\n");
@@ -113,19 +113,19 @@ struct Node* delete_last_element(struct Node* head){
     }
     return head;
 }
-struct Node* delete_kth_element(struct Node* head,int k){
-    if(k==1){
+struct Node* delete_element_at_position(struct Node* head,int operation_index){
+    if(operation_index==1){
         head=delete_first_element(head);
     }
     else{
         struct Node* temp=head;
         struct Node* prev=NULL;
-        while(temp!=NULL && temp->next!=NULL && k-1!=0){
+        while(temp!=NULL && temp->next!=NULL && operation_index-1!=0){
             prev=temp;
             temp=temp->next;
-            k--;
+            operation_index--;
         }
-        if(k-1==0){
+        if(operation_index-1==0){
             prev->next=temp->next;
             free(temp);
         }
@@ -146,30 +146,30 @@ int main(){
         int operation=0;
         scanf("%d",&operation);
                 
-        int n=0,k=0;
+        int new_data=0,operation_index=0;
         switch(operation){
             case 1:
                 printf("Enter Value:");
-                scanf("%d",&n);
-                head=add_in_end(head,n);
+                scanf("%d",&new_data);
+                head=add_in_end(head,new_data);
                 break;
             case 2:
                 printf("Enter Value:");
-                scanf("%d",&n);
-                head=add_in_beginning(head,n);
+                scanf("%d",&new_data);
+                head=add_in_beginning(head,new_data);
                 break;
             case 3:
                 printf("Enter Value and index:");
-                scanf("%d%d",&n,&k);
-                head=add_at_k(head,n,k);
+                scanf("%d%d",&new_data,&operation_index);
+                head=add_at_position(head,new_data,operation_index);
                 break;
             case 4:
                 print_list(head);
                 break;
             case 5:
                 printf("Enter Value and index:");
-                scanf("%d%d",&n,&k);
-                update_at_position(head,n,k);
+                scanf("%d%d",&new_data,&operation_index);
+                update_at_position(head,new_data,operation_index);
                 break;
             case 6:
                 head=delete_first_element(head);
@@ -179,8 +179,8 @@ int main(){
                 break;
             case 8:
                 printf("Enter index:");
-                scanf("%d",&k);
-                head=delete_kth_element(head,k);
+                scanf("%d",&operation_index);
+                head=delete_element_at_position(head,operation_index);
                 break;
             default:
                 printf("Invalid Input\n");
